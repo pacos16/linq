@@ -157,7 +157,7 @@ namespace Modelo
             Jugadores[11].Capitan = Jugadores[13];
 
             //(15,"anonimo","anonimo","Ala-pivot",2,"2012-01-01 00:00:00",4000,3,"2.00"),
-            Jugadores.Add(Jugador.CreateJugador(15,"anonimo","anonimo","Ala-pivot",Jugadores[1],DateTime.Parse("2012-01-01 00:00:00"),4000,Equipos[2],2.00));
+            Jugadores.Add(Jugador.CreateJugador(15,"anonimo","anonimo","Ala-pivot",Jugadores[1],DateTime.Parse("2012-01-01 00:00:00"),4000,Equipos[4],2.00));
             Equipos[4].Jugadores.Add(Jugadores[14]);
             Jugadores[9].Capitan = Jugadores[14];
 
