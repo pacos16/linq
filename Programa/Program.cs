@@ -53,29 +53,57 @@ namespace Programa
             Console.WriteLine(jugadores.OrderBy((j) => j.Altura).Last().ToString());
 
             //2.4 Que jugadores juegan de pivot en la liga.
+            Console.WriteLine("Jugadores que juegan de pivot en la liga");
+            jugadores.Where((j)=> j.Posicion=="Pivot").ToList().ForEach(Console.WriteLine);
+            
+
+            //5.1 Equipo con jugador con salario mas alto;
+
+            Console.WriteLine("Equipo con jugador con salario mas alto");
+            Console.WriteLine(jugadores.OrderBy((j) => j.Salario).First().Equipo);
+
+            //5.2 mas de dos metros
+            Console.WriteLine("Jugadores con mas de dos metros");
+            jugadores.Where((j) => j.Altura > 2.0).ToList().ForEach(Console.WriteLine);
+
+            //5.3 capitanes del equipo
+
+            jugadores.Select((j) => j.Capitan).Distinct().ToList().ForEach(Console.WriteLine);
 
 
+            //4.1 Princesa
+            Console.WriteLine("Lista de strings");
+            jugadores.ForEach((j) => Console.WriteLine("Nombre: {0} Apellido: {1} Equipo: {2}",j.Nombre,j.Apellido,j.Equipo.Nombre));
 
-            //4.2 Lolaso
-
+            //4.2 Ardua tarea
+            Console.WriteLine("Ardua Tarea");
             Dictionary<Equipo, int> equiposGanadores = new Dictionary<Equipo, int>();
             String[] splited;
+
+            equipos.ForEach((e) => equiposGanadores.Add(e, 0));
+            
             partidos.ForEach((p) =>
             {
                 splited=p.Resultado.Split("-");
                 if (int.Parse(splited[0]) > int.Parse(splited[1]))
                 {
-                    if(equiposGanadores.Add(p.Local, 1));
+                    equiposGanadores[p.Local]++;
                 }
                 else
                 {
-                    equiposGanadores.Add(p.Visitante);
+                    equiposGanadores[p.Visitante]++;
                 }
             });
 
+       
+            Console.WriteLine(equiposGanadores.OrderBy((e) => e.Value).First());
             
             Console.ReadLine();
 
         }
+
+
+
+
     }
 }
