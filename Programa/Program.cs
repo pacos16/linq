@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
+
 namespace Programa
 {
     class Program
@@ -102,7 +103,8 @@ namespace Programa
             //serializando
 
             Stream stream = null;
-            string fileName = "C:\\Users\\user\\Documents\\MODUL\\fichero.xml";
+            string fileName = "C:\\Users\\mati\\Documents\\fichero.xml";
+            string fileNameBinary = "C:\\Users\\mati\\Documents\\ficheroBinario.dat";
 
             try
             {
@@ -121,6 +123,51 @@ namespace Programa
                     stream.Close();
                 }
             }
+
+            Stream stream2 = new FileStream(fileName, FileMode.Open);
+            try
+            {
+                XmlSerializer xml = new XmlSerializer(typeof(List<Equipo>));
+                List<Equipo> equiposDeSerializados=(List<Equipo>) xml.Deserialize(stream2);
+                Console.WriteLine("Jugador xml deserializado (equipo hardcodeado)");
+               
+                equiposDeSerializados.ForEach((e) => {
+                    e.Jugadores.ForEach((j) => j.Equipo = e);
+                });
+               
+                equiposDeSerializados[0].Jugadores.ForEach(Console.WriteLine); 
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("lol");
+            }
+
+
+            Console.WriteLine("jugador binario deserializado");
+            Stream stream3=null;
+
+            try
+            {
+                stream3 = File.Create(fileNameBinary);
+                var binaryFormater = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                binaryFormater.Serialize(stream3,equipos);
+                stream3.Close();
+            }catch(Exception e)
+            {
+                Console.WriteLine("Lol");
+            }
+
+            byte[] buffer = System.IO.File.ReadAllBytes(fileNameBinary);
+            //Equipos binarios
+            var stream4 = new System.IO.MemoryStream(buffer);
+            System.Runtime.Serialization.IFormatter binaryFormater2 = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            List<Equipo> equiposBinarios= (List<Equipo>) binaryFormater2.Deserialize(stream4);
+
+            equiposBinarios[0].Jugadores.ForEach(Console.WriteLine);
+
+
+
+
             Console.ReadLine();
 
         }

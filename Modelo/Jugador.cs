@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 
 namespace Modelo
 {
+    [Serializable]
     public class Jugador 
     {
         [XmlAttribute]

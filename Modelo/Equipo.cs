@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Modelo
-{
+{   [Serializable]
     public class Equipo
     {
         [XmlAttribute()]
@@ -13,11 +13,13 @@ namespace Modelo
         public string Web { get; set; }
         public int Puntos { get; set; }
         public System.Collections.Generic.List<Jugador> Jugadores { get; set; }
+       
 
         public static Equipo CreateEquipo(int id, string nombre, string ciudad, string web, int puntos)
         {
 
             return new Equipo(id, nombre, ciudad, web, puntos);
+            
         }
 
 
@@ -42,7 +44,20 @@ namespace Modelo
             Web = web;
             Puntos = puntos;
             Jugadores = new System.Collections.Generic.List<Jugador>();
+            
         }
+
         
+
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            Jugadores.ForEach((j)=> j.Equipo=this);
+        }
     }
+
+
 }
+
+
+
