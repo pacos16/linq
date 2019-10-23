@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Modelo
 {
-    public class Jugador
+    public class Jugador 
     {
-        public int Id { get; }
+        [XmlAttribute]
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public string Posicion { get; }
+        public string Posicion { get; set; }
+        [XmlIgnore]
         public Jugador Capitan { get; set; }
-        public DateTime FechaAlta { get; }
-        public int Salario { get; }
-        public Equipo Equipo { get; }
-        public double Altura { get; }
-
+        public DateTime FechaAlta { get; set; }
+        public int Salario { get; set; }
+        [XmlIgnore]
+        public Equipo Equipo { get; set; }
+        public double Altura { get; set; }
+        public Jugador() {        }
        private Jugador(int id, string nombre, string apellido, string posicion, Jugador capitan, DateTime fechaAlta, int salario, Equipo equipo, double altura)
             : this (id,nombre,apellido,posicion,fechaAlta,salario,equipo,altura)
         {

@@ -2,6 +2,8 @@
 using Modelo;
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Programa
 {
@@ -20,7 +22,7 @@ namespace Programa
             equipos.ForEach(Console.WriteLine);
 
 
-            Console.WriteLine("Jugadores:");
+            Console.WriteLine("Jugadores:"); 
             /*
             foreach (var j in LigaDAO.Instance.Jugadores)
             {
@@ -89,15 +91,36 @@ namespace Programa
                 {
                     equiposGanadores[p.Local]++;
                 }
-                else
+                else if(int.Parse(splited[1]) > int.Parse(splited[0]))
                 {
                     equiposGanadores[p.Visitante]++;
                 }
             });
 
-       
-            Console.WriteLine(equiposGanadores.OrderBy((e) => e.Value).First());
-            
+            Console.WriteLine(equiposGanadores.OrderBy((e) => e.Value).Last());
+
+            //serializando
+
+            Stream stream = null;
+            string fileName = "C:\\Users\\user\\Documents\\MODUL\\fichero.xml";
+
+            try
+            {
+                stream = File.Create(fileName);
+                XmlSerializer xml = new XmlSerializer(typeof(List<Equipo>));
+                xml.Serialize(stream, equipos);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Close();
+                }
+            }
             Console.ReadLine();
 
         }

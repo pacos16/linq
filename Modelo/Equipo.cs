@@ -1,21 +1,28 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace Modelo
 {
     public class Equipo
     {
-        public int ID { get;  }
+        [XmlAttribute()]
+        public int ID { get; set; }
         public string Nombre { get; set; }
         public string Ciudad { get; set; }
         public string Web { get; set; }
         public int Puntos { get; set; }
-        public System.Collections.Generic.List<Jugador> Jugadores { get; }
+        public System.Collections.Generic.List<Jugador> Jugadores { get; set; }
 
         public static Equipo CreateEquipo(int id, string nombre, string ciudad, string web, int puntos)
         {
 
             return new Equipo(id, nombre, ciudad, web, puntos);
         }
+
+
+
+
 
         private Equipo()
         {
@@ -36,5 +43,6 @@ namespace Modelo
             Puntos = puntos;
             Jugadores = new System.Collections.Generic.List<Jugador>();
         }
+        
     }
 }
